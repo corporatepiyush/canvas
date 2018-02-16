@@ -1,0 +1,84 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <h3>
+        <p id="main">
+            Loading ...
+        </p>
+    </h3>
+
+    <p id="snap">
+    </p>
+    <script type="text/javascript" src="webcam.min.js"></script>
+    <script>
+        function getQueryStringAsObject() {
+            const queryString = location.href.split('?')[1]
+            const paramArr = queryString.split('&').map((param) => param.split('='))
+
+            const obj = {}
+            for (param of paramArr) {
+                obj[param[0]] = param[1]
+            }
+
+            return obj
+        }
+
+
+        function sayIt(message, callbackOnEnd) {
+            const msg = new SpeechSynthesisUtterance(message)
+            msg.onend = callbackOnEnd
+            window.speechSynthesis.speak(msg);
+        }
+
+
+        function takeSnapShot() {
+            Webcam.set({
+                width: 640,
+                height: 480,
+                image_format: 'jpeg',
+                jpeg_quality: 90
+            })
+            Webcam.snap(function (data_uri) {
+                // data_uri can be sent to server using POST request in actual implementation 
+                document.getElementById('snap').innerHTML =
+                    '<h2>Here is your image:</h2>' +
+                    '<img src="' + data_uri + '"/>';
+            })
+        }
+
+        function acceptAgreement() {
+            const main = document.getElementById('main')
+            main.innerHTML =
+                `
+                .... some text ...... <br>
+                Do you accept term and condition <br>
+                <input type='button' value='Accept' > <br>
+                <input type='button' value='Reject' >`
+
+            sayIt("Do you accept terms and condition ?", takeSnapShot)
+        }
+
+        function showAndPlay() {
+            const params = getQueryStringAsObject()
+            const main = document.getElementById('main')
+            main.innerHTML =
+                `
+                Dear ${unescape(params['PNAME'])}, <br>
+                You have chosen the plan ${params['PRODUCTNAME']} under ${params['PMODE']} as mode of payment with 
+                premium of ${params['PMPREM']}. <br>
+                We assure you the sum of ${params['LSA']}.`
+
+            sayIt(main.innerText, acceptAgreement)
+        }
+
+        setTimeout(showAndPlay, 500)
+    </script>
+</body>
+
+</html>

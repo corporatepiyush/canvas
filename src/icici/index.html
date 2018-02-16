@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>ICICI Link Generator</title>
+
+    <style>
+    </style>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="rs.css">
+
+<body style="background-color:#f6f6f6;">
+
+    <div class="w3-container" align="center">
+        <div id="header"></div>
+
+
+        <br>
+        <img src="assets/rslogo.png" alt="ICICI Prudential" style="width:263px;height:81px;">
+    </div>
+
+    <body>
+        <div class="w3-row-padding">
+            <div>
+                <br> </div>
+
+            <div class="w3-half" align="right">
+                User Name
+                <br>
+                <br> Sum Assured
+                <br>
+                <br> Modal Premium
+                <br>
+                <br>
+                <br> Mode of Payement
+                <br>
+                <br> Check the plan you prefer
+                <br>
+                <br> Prefered Riders
+            </div>
+
+            <div class="w3-half">
+                <Input type="text" size="30" id="UserNameTB" placeholder="John Doe" />
+                <br>
+                <br>
+                <Input type="text" size="30" id="TermTB" placeholder="Number range from 1-99 crores" value="1000000" />
+                <br>
+                <br>
+                <Input type="text" size="30" id="PremiumTB" placeholder="number range from 1-99 crores" value="1000" />
+                <br>
+                <br>
+                <input type="radio" name="paymode" value="quaterly" checked>
+                <label for="Quarterly"> Quarterly</label>&nbsp
+                <input type="radio" name="paymode" value="semi">
+                <label for="Semi-Annual"> Semi-Annual</label>&nbsp
+                <input type="radio" name="paymode" value="annual">
+                <label for="Annual"> Annual</label>
+                <br>
+                <br>
+                <input type="radio" name="chooseone" value="ismart" checked>
+                <label for="iProtect Smart"> iProtect Smart</label>&nbsp
+                <input type="radio" name="chooseone" value="elite">
+                <label for="Elite Life Super"> Elite Life Super</label>&nbsp
+                <input type="radio" name="chooseone" value="easy">
+                <label for="Easy Retirement"> Easy Retirement</label>
+                <br>
+                <br>
+                <!--<input type="checkbox" id="rider1" value="true">Waiver of premium</input><br>
+<input type="checkbox" id="rider2" value="true">Critical illness</input><br>
+<input type="checkbox" id="rider3" value="true">Accidental death rider</input><br>
+<input type="checkbox" id="rider4" value="true">Permanent & partial disability</input><br>
+<input type="checkbox" id="rider5" value="true">Income benefit rider</input><br><br> -->
+                <a id="mobileurl" target="_blank"> link </a>
+                <br>
+                <br>
+                <!-- <a id="relativeurl" target="_blank"> link </a><br><br>  -->
+                <Input type="button" value="Generate Links" onclick="GenerateUrl('showPlan')" />
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+
+        </div>
+
+        <script type="text/javascript">
+            function GenerateUrl(fname, no) {
+                console.log();
+
+                var pname = document.getElementById('UserNameTB');
+                if (!pname.value) pname.value = "John Doe";
+                var lsa = document.getElementById('TermTB').value || "100000";
+                var pmprem = document.getElementById('PremiumTB').value || "2500";
+                var PMODE = $("input[name='paymode']:checked").val();
+                var planradioVal = $("input[name='chooseone']:checked").val();
+                //	var mobileurl = "../" + fname + ".html?PNAME="+ pname.value + "&LSA=" + lsa + "&PMPREM=" + pmprem+"&PMODE="+PMODE+"&RIDER1="+$('#rider1').prop('checked')+"&RIDER2="+$('#rider2').prop('checked')+"&RIDER3="+$('#rider3').prop('checked')+"&RIDER4="+$('#rider4').prop('checked')+"&RIDER5="+$('#rider5').prop('checked')+"&PRODUCTNAME="+planradioVal+"&PTERM=5";
+
+                var mobileurl = "../" + fname + ".html?PNAME=" + pname.value + "&LSA=" + lsa + "&PMPREM=" + pmprem +
+                    "&PMODE=" + PMODE + "&PRODUCTNAME=" + planradioVal + "&PTERM=5";
+                // <!-- var l = document.getElementById('relativeurl');  -->
+                // <!-- l.innerText = mobileurl.replace("../",""); -->
+                // <!-- l.href = mobileurl.replace("../",""); -->
+                var a = document.getElementById('mobileurl');
+                a.innerText = mobileurl.replace("../", "");
+                a.href = mobileurl.replace("../", "");
+
+                console.log(mobileurl)
+
+            }
+        </script>
+    </body>
+    <div id="footer"></div>
+
+</html>
